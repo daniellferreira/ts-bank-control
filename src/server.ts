@@ -1,10 +1,16 @@
 // import fs from 'fs';
 import { Server } from '@overnightjs/core';
-import bodyParser from 'body-parser';
-import { Application, static as staticExpress } from 'express';
-import './util/module-alias';
-import * as database from '@src/util/database';
+
+import {
+  Application,
+  json,
+  urlencoded,
+  /* static as staticExpress */
+} from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+
+import * as database from '@src/util/database';
 import { Server as HttpServer } from 'http';
 // import { ErrorHandler } from '@src/lib/errorHandler'
 import { config, Environment } from '@src/services/config';
@@ -17,8 +23,10 @@ export class SetupServer extends Server {
   }
 
   private setupExpress(): void {
-    this.app.use(bodyParser.json());
-    this.app.use(cors({ origin: '*' }));
+    this.app.use(helmet());
+    this.app.use(cors());
+    this.app.use(json());
+    this.app.use(urlencoded({ extended: true }));
   }
 
   private async setupControllers(): Promise<void> {
@@ -40,15 +48,17 @@ export class SetupServer extends Server {
     await database.connect();
   }
 
-  private setupDoc(): void {
-    this.app.use(staticExpress(__dirname + '/docs'));
-  }
+  //   private setupDoc(): void {
+  // this.app.use(staticExpress(__dirname + '/docs'));
+  //   }
 
   public async init(): Promise<void> {
     this.setupExpress();
     await this.setupControllers();
     await this.setupDatabase();
-    this.setupDoc();
+
+    //TODO:verificar documentação
+    // this.setupDoc();
   }
 
   public start(): void {

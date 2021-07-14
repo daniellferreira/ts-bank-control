@@ -1,5 +1,4 @@
-// import fs from 'fs';
-import { Server } from '@overnightjs/core';
+import fs from 'fs';
 
 import {
   Application,
@@ -10,9 +9,11 @@ import {
 import cors from 'cors';
 import helmet from 'helmet';
 
-import * as database from '@src/util/database';
+import { Server } from '@overnightjs/core';
 import { Server as HttpServer } from 'http';
+
 // import { ErrorHandler } from '@src/lib/errorHandler'
+import * as database from '@src/util/database';
 import { config, Environment } from '@src/services/config';
 
 export class SetupServer extends Server {
@@ -30,18 +31,21 @@ export class SetupServer extends Server {
   }
 
   private async setupControllers(): Promise<void> {
-    // let controllers: string[] = fs.readdirSync('./src/controllers');
-    // controllers = controllers
-    //   .filter((ctr) => !ctr.startsWith('__') && ctr.endsWith('.ts'))
-    //   .map((ctr) => ctr.replace('.ts', ''));
-    // for (const controller of controllers) {
-    //   const controllerFile = await import(`@src/controllers/${controller}`);
-    //   Object.keys(controllerFile)
-    //     .filter((elem) => elem.includes('Controller'))
-    //     .forEach((controllerName) => {
-    //       this.addControllers(new controllerFile[controllerName]());
-    //     });
-    // }
+    // Carrega todas as controllers dinamicamente
+    let controllerFiles: string[] = fs.readdirSync('./src/controllers');
+
+    const controllers = controllerFiles
+      .filter((ctr) => !ctr.startsWith('__') && ctr.endsWith('.ts'))
+      .map((ctr) => ctr.replace('.ts', ''));
+
+    for (const controller of controllers) {
+      const controllerFile = await import(`@src/controllers/${controller}`);
+      Object.keys(controllerFile)
+        .filter((elem) => elem.includes('Controller'))
+        .forEach((controllerName) => {
+          this.addControllers(new controllerFile[controllerName]());
+        });
+    }
   }
 
   private async setupDatabase(): Promise<void> {

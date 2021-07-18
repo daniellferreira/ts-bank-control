@@ -31,7 +31,11 @@ const schema = new Schema(
       ref: 'Account',
       required: true,
     },
-    ticketCode: String,
+    ticketCode: {
+      type: String,
+      minLength: 47,
+      maxLength: 47,
+    },
   },
   {
     toJSON: {
@@ -46,6 +50,10 @@ const schema = new Schema(
 );
 
 schema.index({ createdAt: -1 });
+schema.index(
+  { account: 1, ticketCode: 1 },
+  { unique: true, partialFilterExpression: { ticketCode: { $exists: true } } }
+);
 
 export const Finance: IFinanceModel = model<IFinanceDocument, IFinanceModel>(
   'Finance',

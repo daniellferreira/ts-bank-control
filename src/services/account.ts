@@ -1,5 +1,5 @@
 import { StatusCodes, UserError } from '@src/errors/user-error';
-import { Account } from '@src/models/account';
+import { Account, IAccountDocument } from '@src/models/account';
 import { ClientSession } from 'mongoose';
 
 interface UpdateAmountFilter {
@@ -13,11 +13,7 @@ export class AccountService {
     accountId: string,
     amount: number
   ) {
-    const filter: UpdateAmountFilter = { _id: accountId };
-
-    if (amount < 0) {
-      filter.amount = { $gte: amount * -1 };
-    }
+    const filter = this.buildUpdateFilter(accountId, amount);
 
     const updatedAccount = await Account.findOneAndUpdate(
       filter,
@@ -25,12 +21,7 @@ export class AccountService {
       { runValidators: true, new: true, session }
     );
 
-    if (!updatedAccount) {
-      throw new UserError(
-        'Saldo insuficiente para realizar esta operação',
-        StatusCodes.BadRequest
-      );
-    }
+    this.validatePostUpdateAmount(updatedAccount);
 
     return updatedAccount;
   }
@@ -46,5 +37,29 @@ export class AccountService {
         timestamps: false,
       }
     );
+  }
+
+  public buildUpdateFilter(
+    accountId: string,
+    amount: number
+  ): UpdateAmountFilter {
+    const filter: UpdateAmountFilter = { _id: accountId };
+
+    if (amount < 0) {
+      filter.amount = { $gte: amount * -1 };
+    }
+
+    return filter;
+  }
+
+  public validatePostUpdateAmount(
+    updatedDocument: IAccountDocument | null
+  ): void {
+    if (!updatedDocument) {
+      throw new UserError(
+        'Saldo insuficiente para realizar esta operação',
+        StatusCodes.BadRequest
+      );
+    }
   }
 }

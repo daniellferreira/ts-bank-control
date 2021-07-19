@@ -8,8 +8,9 @@ const detailFieldErrorByKind: { [key: string]: string } = {
   required: 'Campo %s é obrigatório',
 };
 
-class HandlerError extends UserError {
-  keyPattern: any;
+export class HandlerError extends UserError {
+  keyPattern?: any;
+  code?: string | number | undefined;
 }
 
 export const ErrorHandler = (
@@ -18,8 +19,6 @@ export const ErrorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
-  const details = new Map<string, string>();
-
   if (!err.statusCode) {
     err.statusCode = StatusCodes.BadRequest;
   }
@@ -32,12 +31,15 @@ export const ErrorHandler = (
     const messages: string[] = Object.keys(err.errors).map((fieldName) => {
       const error = err.errors[fieldName] as mongoose.Error.ValidatorError;
 
-      return (
-        detailFieldErrorByKind[error?.kind] || err.errors[fieldName]?.message
-      );
+      if (detailFieldErrorByKind[error?.kind]) {
+        let msg = detailFieldErrorByKind[error?.kind];
+        return msg.replace('%s', fieldName);
+      }
+
+      return err.errors[fieldName]?.message;
     });
 
-    err.message = 'Existem erros de validação:\n- ' + messages.join('\n-');
+    err.message = 'Existem erros de validação:\n- ' + messages.join('\n- ');
   }
 
   if (err instanceof mongoose.mongo.MongoError && err.keyPattern) {
@@ -65,7 +67,6 @@ export const ErrorHandler = (
   res.status(err.statusCode).json({
     message: err.message,
     type: err.name,
-    errors: details.size > 0 ? Object.fromEntries(details) : undefined,
     original_error:
       process.env.NODE_ENV === Environment.DEVELOPMENT ? err : undefined,
   });

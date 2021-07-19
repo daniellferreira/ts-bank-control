@@ -12,7 +12,7 @@ import helmet from 'helmet';
 import { Server } from '@overnightjs/core';
 import { Server as HttpServer } from 'http';
 
-import { ErrorHandler } from '@src/util/errorHandler';
+import { ErrorHandler } from '@src/util/error-handler';
 import * as database from '@src/util/database';
 import { config, Environment } from '@src/services/config';
 

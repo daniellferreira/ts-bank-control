@@ -49,14 +49,9 @@ export class FinanceService {
     session: ClientSession,
     account: string,
     amount: number,
-    ticketCode?: string
+    ticketCode: string
   ) {
-    if (!ticketCode) {
-      throw new UserError(
-        'Campo Linha Digitável é obrigatório para realizar um pagamento',
-        StatusCodes.BadRequest
-      );
-    }
+    this.validateTicketCode(ticketCode);
 
     await this.accountService.updateAmount(session, account, amount * -1);
 
@@ -67,5 +62,14 @@ export class FinanceService {
       ticketCode,
     });
     return await finance.save({ session });
+  }
+
+  public validateTicketCode(ticketCode?: string): void {
+    if (!ticketCode) {
+      throw new UserError(
+        'Campo Linha Digitável é obrigatório para realizar um pagamento',
+        StatusCodes.BadRequest
+      );
+    }
   }
 }

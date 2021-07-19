@@ -5,8 +5,8 @@ export interface Account {
   amount: number;
 }
 
-interface IAccountDocument extends Omit<Account, 'id'>, Document {}
-interface IAccountModel extends Model<IAccountDocument> {}
+export interface IAccountDocument extends Omit<Account, 'id'>, Document {}
+export interface IAccountModel extends Model<IAccountDocument> {}
 
 const schema = new mongoose.Schema(
   {

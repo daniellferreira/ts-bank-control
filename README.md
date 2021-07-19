@@ -1,6 +1,6 @@
 # ts-bank-control
 
-[![node-version](https://img.shields.io/badge/node-%3E%3D%2014.17.3-green)](https://nodejs.org/docs/latest-v14.x/api/index.html) [![hosted-heroku](https://img.shields.io/badge/hosted%20on-Heroku-purple)](https://ts-bank-control-api.herokuapp.com/ping) [![cov](https://img.shields.io/badge/coverage-94.2%25-green)]()
+[![node-version](https://img.shields.io/badge/node-%3E%3D%2014.17.3-green)](https://nodejs.org/docs/latest-v14.x/api/index.html) [![cov](https://img.shields.io/badge/coverage-94.2%25-green)]() [![hosted-heroku](https://img.shields.io/badge/hosted%20on-Heroku-purple)](https://ts-bank-control-api.herokuapp.com/ping)
 
 Uma API que realiza operações básicas de uma conta bancária. \
 :electric_plug: &nbsp; Back-end: https://ts-bank-control-api.herokuapp.com/ping \
@@ -22,9 +22,9 @@ Uma API que realiza operações básicas de uma conta bancária. \
 
 ## :gear: Tecnologia e Arquitetura
 
-**API**: NodeJS, TypeScript, Express, [OvernightJS](https://github.com/seanpmaxwell/overnight)
-**Testes**: Jest, [Supertest](https://github.com/visionmedia/supertest)
-**Banco de Dados**: MongoDB (com Docker localmente e hospedado no [Atlas](https://www.mongodb.com/cloud/atlas) em produção)
+**API**: NodeJS, TypeScript, Express, [OvernightJS](https://github.com/seanpmaxwell/overnight) \
+**Testes**: Jest, [Supertest](https://github.com/visionmedia/supertest) \
+**Banco de Dados**: MongoDB (com Docker localmente e hospedado no [Atlas](https://www.mongodb.com/cloud/atlas) em produção) \
 **Deploy**: [Heroku](https://www.heroku.com/home) integrado ao repositório
 
 ## Executar localmente

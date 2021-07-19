@@ -105,3 +105,6 @@ dist
 
 # Docker data
 data
+
+# Mac files
+.DS_Store

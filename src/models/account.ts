@@ -1,4 +1,6 @@
 import mongoose, { Document, Model, model } from 'mongoose';
+import mongooseFloat from 'mongoose-float';
+const Float = mongooseFloat.loadType(mongoose);
 
 export interface Account {
   readonly id?: string;
@@ -11,7 +13,7 @@ export interface IAccountModel extends Model<IAccountDocument> {}
 const schema = new mongoose.Schema(
   {
     amount: {
-      type: Number,
+      type: Float,
       min: 0.0,
       default: 0.0,
     },

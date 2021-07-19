@@ -1,4 +1,6 @@
-import { Document, Model, Schema, model } from 'mongoose';
+import mongoose, { Document, Model, model, Schema } from 'mongoose';
+import mongooseFloat from 'mongoose-float';
+const Float = mongooseFloat.loadType(mongoose);
 
 const financeType = ['in', 'out', 'payment_ticket'] as const;
 type FinanceType = typeof financeType[number];
@@ -25,7 +27,7 @@ const schema = new Schema(
       required: true,
     },
     amount: {
-      type: Number,
+      type: Float,
       min: 0.0,
       required: true,
     },

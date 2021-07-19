@@ -1,4 +1,5 @@
-import { StatusCodes, UserError } from '@src/errors/user-error';
+import { UserError } from '@src/errors/user-error';
+import { StatusCodes } from '@src/enums/status-codes';
 import { ErrorHandler } from '@src/util/error-handler';
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import mongoose from 'mongoose';
@@ -17,7 +18,7 @@ describe('ErrorHandler tests', () => {
     ErrorHandler(err, req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(StatusCodes.BadRequest);
-    expect(res.json).toHaveBeenCalledWith(
+    expect(res.send).toHaveBeenCalledWith(
       expect.objectContaining({
         message: 'Erro desconhecido',
         type: 'Error',
@@ -35,7 +36,7 @@ describe('ErrorHandler tests', () => {
     ErrorHandler(err as unknown as UserError, req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(StatusCodes.BadRequest);
-    expect(res.json).toHaveBeenCalledWith(
+    expect(res.send).toHaveBeenCalledWith(
       expect.objectContaining({
         message: 'Existem erros de validação:\n- Campo abc é obrigatório',
         type: 'ValidationError',
@@ -54,7 +55,7 @@ describe('ErrorHandler tests', () => {
     ErrorHandler(err as unknown as UserError, req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(StatusCodes.BadRequest);
-    expect(res.json).toHaveBeenCalledWith(
+    expect(res.send).toHaveBeenCalledWith(
       expect.objectContaining({
         message:
           'Existem erros de validação:\n- Campo abc está inválido\n- Campo def está inválido',
@@ -69,7 +70,7 @@ describe('ErrorHandler tests', () => {
     ErrorHandler(err as unknown as UserError, req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(StatusCodes.NotFound);
-    expect(res.json).toHaveBeenCalledWith(
+    expect(res.send).toHaveBeenCalledWith(
       expect.objectContaining({
         message: 'Registro não encontrado com id: 12313123',
         type: 'CastError',

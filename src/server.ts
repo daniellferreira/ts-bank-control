@@ -19,7 +19,7 @@ import { config, Environment } from '@src/services/config';
 export class SetupServer extends Server {
   private server!: HttpServer;
 
-  constructor(private port: number) {
+  constructor(private port: number = 3000) {
     super(config.environment === Environment.DEVELOPMENT);
   }
 
@@ -52,6 +52,10 @@ export class SetupServer extends Server {
     await database.connect();
   }
 
+  private setupErrorHandler(): void {
+    this.app.use(ErrorHandler);
+  }
+
   //   private setupDoc(): void {
   // this.app.use(staticExpress(__dirname + '/docs'));
   //   }
@@ -60,14 +64,10 @@ export class SetupServer extends Server {
     this.setupExpress();
     await this.setupControllers();
     await this.setupDatabase();
-
-    //TODO:verificar documentação
-    // this.setupDoc();
+    this.setupErrorHandler();
   }
 
   public start(): void {
-    this.app.use(ErrorHandler);
-
     this.server = this.app.listen(this.port, () => {
       console.info(`Server running on PID ${process.pid} port ${this.port}`);
     });
@@ -75,7 +75,17 @@ export class SetupServer extends Server {
 
   public async close(): Promise<void> {
     await database.close();
-    this.server.close();
+
+    if (this.server) {
+      await new Promise((resolve, reject) => {
+        this.server?.close((err) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(true);
+        });
+      });
+    }
   }
 
   public getApp(): Application {

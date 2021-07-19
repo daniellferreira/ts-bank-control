@@ -1,4 +1,5 @@
-import { StatusCodes, UserError } from '@src/errors/user-error';
+import { UserError } from '@src/errors/user-error';
+import { StatusCodes } from '@src/enums/status-codes';
 import { Finance } from '@src/models/finance';
 import { AccountService } from '@src/services/account';
 import { ClientSession } from 'mongoose';
@@ -9,7 +10,7 @@ export class FinanceService {
   public async getHistory(account: string) {
     return Finance.find(
       { account },
-      { _id: 0, id: '$_id', type: 1, amount: 1, createdAt: 1, ticketCode: 1 },
+      { _id: 0, type: 1, amount: 1, createdAt: 1, ticketCode: 1 },
       { lean: true, sort: { createdAt: 'desc' } }
     );
   }
@@ -49,7 +50,7 @@ export class FinanceService {
     session: ClientSession,
     account: string,
     amount: number,
-    ticketCode: string
+    ticketCode?: string
   ) {
     this.validateTicketCode(ticketCode);
 

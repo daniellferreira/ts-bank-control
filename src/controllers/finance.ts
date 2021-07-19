@@ -2,6 +2,7 @@ import { Controller, Get, Post } from '@overnightjs/core';
 import { NextFunction, Request, Response } from 'express';
 import { FinanceService } from '@src/services/finance';
 import { startSession } from 'mongoose';
+import { StatusCodes } from '@src/enums/status-codes';
 
 export interface FinanceOperationBody {
   readonly account_id: string;
@@ -28,7 +29,7 @@ export class FinanceController {
 
       const history = await this.financeService.getHistory(accountId);
 
-      res.status(200).send(history);
+      res.status(StatusCodes.OK).send(history);
     } catch (err) {
       next(err);
     }
@@ -50,7 +51,7 @@ export class FinanceController {
 
       await session.commitTransaction();
 
-      res.status(200).send();
+      res.status(StatusCodes.OK).send();
     } catch (err) {
       await session.abortTransaction();
       next(err);
@@ -76,7 +77,7 @@ export class FinanceController {
 
       await session.commitTransaction();
 
-      res.status(200).send();
+      res.status(StatusCodes.OK).send();
     } catch (err) {
       await session.abortTransaction();
       next(err);
@@ -107,7 +108,7 @@ export class FinanceController {
 
       await session.commitTransaction();
 
-      res.status(200).send();
+      res.status(StatusCodes.OK).send();
     } catch (err) {
       await session.abortTransaction();
       next(err);

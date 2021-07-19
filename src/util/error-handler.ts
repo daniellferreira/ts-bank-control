@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import { Environment } from '@src/services/config';
-import { StatusCodes, UserError } from '@src/errors/user-error';
+import { UserError } from '@src/errors/user-error';
+import { StatusCodes } from '@src/enums/status-codes';
 
 const detailFieldErrorByKind: { [key: string]: string } = {
   unexpected: 'Erro desconhecido',
@@ -64,7 +65,7 @@ export const ErrorHandler = (
     err.statusCode = StatusCodes.NotFound;
   }
 
-  res.status(err.statusCode).json({
+  res.status(err.statusCode).send({
     message: err.message,
     type: err.name,
     original_error:

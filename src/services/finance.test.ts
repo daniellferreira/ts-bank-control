@@ -1,5 +1,6 @@
-import { StatusCodes, UserError } from '@src/errors/user-error';
-import { FinanceService } from '../finance';
+import { UserError } from '@src/errors/user-error';
+import { StatusCodes } from '@src/enums/status-codes';
+import { FinanceService } from '@src/services/finance';
 
 describe('FinanceService tests', () => {
   let service: FinanceService;

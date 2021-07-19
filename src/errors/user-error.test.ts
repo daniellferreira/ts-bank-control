@@ -1,4 +1,5 @@
-import { StatusCodes, UserError } from '@src/errors/user-error';
+import { UserError } from '@src/errors/user-error';
+import { StatusCodes } from '@src/enums/status-codes';
 
 describe('UserError tests', () => {
   it('should build error with correct message', () => {

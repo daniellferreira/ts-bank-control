@@ -1,4 +1,5 @@
-import { StatusCodes, UserError } from '@src/errors/user-error';
+import { UserError } from '@src/errors/user-error';
+import { StatusCodes } from '@src/enums/status-codes';
 import { IAccountDocument } from '@src/models/account';
 import { AccountService } from '@src/services/account';
 

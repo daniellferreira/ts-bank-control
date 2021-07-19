@@ -1,11 +1,4 @@
-export enum StatusCodes {
-  BadRequest = 400,
-  Unauthorized = 401,
-  NotFound = 404,
-  Conflict = 409,
-  Semantic = 422,
-  InternalServerError = 500,
-}
+import { StatusCodes } from '@src/enums/status-codes';
 
 export class UserError extends Error {
   constructor(

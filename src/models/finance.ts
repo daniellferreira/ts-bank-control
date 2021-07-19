@@ -11,8 +11,8 @@ export interface Finance {
   ticketCode?: string;
 }
 
-interface IFinanceDocument extends Omit<Finance, 'id'>, Document {}
-interface IFinanceModel extends Model<IFinanceDocument> {}
+export interface IFinanceDocument extends Omit<Finance, 'id'>, Document {}
+export interface IFinanceModel extends Model<IFinanceDocument> {}
 
 const TICKET_LENGTH = 47;
 const TICKET_VALIDATOR_MSG = `Linha digitável deve ter ${TICKET_LENGTH} caracteres`;

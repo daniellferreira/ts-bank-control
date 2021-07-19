@@ -1,10 +1,11 @@
-import { resolve } from 'path';
+const { resolve } = require('path');
 
 const root = resolve(__dirname);
 
-export default {
+module.exports = {
   rootDir: root,
-  testMatch: ['<rootDir>/**/*.test.ts'],
+  testMatch: ['<rootDir>/src/**/*.test.ts'],
+  displayName: 'unit-tests',
   testEnvironment: 'node',
   clearMocks: true,
   preset: 'ts-jest',

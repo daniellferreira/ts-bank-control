@@ -28,6 +28,10 @@ Uma API que realiza operações básicas de uma conta bancária. \
 **Deploy**: [Heroku](https://www.heroku.com/home) integrado ao repositório (ao realizar push na branch develop o deploy é realizado)
 **Injeção de Dependência**: as dependências padrões das classes podem ser alteradas através do construtor, facilitando mocks de serviços ou alterações condicional de comportamento.
 
+###### Diagrama da arquitetura
+
+![arch-diagram](https://github.com/daniellferreira/ts-bank-control/blob/develop/public/assets/arch.png?raw=true)
+
 ## Executar localmente
 
 #### Requisitos

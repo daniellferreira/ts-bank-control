@@ -3,7 +3,7 @@
 [![node-version](https://img.shields.io/badge/node-%3E%3D%2014.17.3-green)](https://nodejs.org/docs/latest-v14.x/api/index.html) [![hosted-heroku](https://img.shields.io/badge/hosted%20on-Heroku-purple)](https://ts-bank-control-api.herokuapp.com/ping) [![cov](https://img.shields.io/badge/coverage-94.2%25-green)]()
 
 Uma API que realiza operações básicas de uma conta bancária. \
-:electric_plug: &nbsp; Back-end: https://ts-bank-control-api.herokuapp.com/ping
+:electric_plug: &nbsp; Back-end: https://ts-bank-control-api.herokuapp.com/ping \
 :computer: &nbsp; Front-end: https://front-bank-control.herokuapp.com/
 
 ## :white_check_mark: Funcionalidades

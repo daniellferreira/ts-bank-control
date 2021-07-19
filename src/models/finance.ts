@@ -14,6 +14,9 @@ export interface Finance {
 interface IFinanceDocument extends Omit<Finance, 'id'>, Document {}
 interface IFinanceModel extends Model<IFinanceDocument> {}
 
+const TICKET_LENGTH = 47;
+const TICKET_VALIDATOR_MSG = `Linha digitável deve ter ${TICKET_LENGTH} caracteres`;
+
 const schema = new Schema(
   {
     type: {
@@ -33,8 +36,8 @@ const schema = new Schema(
     },
     ticketCode: {
       type: String,
-      minLength: 47,
-      maxLength: 47,
+      minLength: [TICKET_LENGTH, TICKET_VALIDATOR_MSG],
+      maxLength: [TICKET_LENGTH, TICKET_VALIDATOR_MSG],
     },
   },
   {

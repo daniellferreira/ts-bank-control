@@ -1,3 +1,4 @@
+import { StatusCodes, UserError } from '@src/errors/user-error';
 import { Account } from '@src/models/account';
 import { ClientSession } from 'mongoose';
 
@@ -25,7 +26,10 @@ export class AccountService {
     );
 
     if (!updatedAccount) {
-      throw new Error('Insuficient amount in account to do this operation');
+      throw new UserError(
+        'Saldo insuficiente para realizar esta operação',
+        StatusCodes.BadRequest
+      );
     }
 
     return updatedAccount;

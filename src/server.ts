@@ -12,7 +12,7 @@ import helmet from 'helmet';
 import { Server } from '@overnightjs/core';
 import { Server as HttpServer } from 'http';
 
-// import { ErrorHandler } from '@src/lib/errorHandler'
+import { ErrorHandler } from '@src/util/errorHandler';
 import * as database from '@src/util/database';
 import { config, Environment } from '@src/services/config';
 
@@ -66,8 +66,7 @@ export class SetupServer extends Server {
   }
 
   public start(): void {
-    //TODO: criar um tratar de erro padrão
-    // this.app.use(ErrorHandler)
+    this.app.use(ErrorHandler);
 
     this.server = this.app.listen(this.port, () => {
       console.info(`Server running on PID ${process.pid} port ${this.port}`);

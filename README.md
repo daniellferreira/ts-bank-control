@@ -15,17 +15,18 @@ Uma API que realiza operações básicas de uma conta bancária. \
 
 ## :pushpin: Todo
 
+- Pipeline CI/CD (GitHub Actions)
 - Autenticação e Autorização [JWT](https://jwt.io/) para poder ser usado como SaaS (base já está preparada para não depender de um único id de conta)
 - Definição e aplicação de rendimento no saldo em conta (cron job)
 - Validações pré commit (Husky)
-- Pipeline CI/CD (GitHub Actions)
 
 ## :gear: Tecnologia e Arquitetura
 
 **API**: NodeJS, TypeScript, Express, [OvernightJS](https://github.com/seanpmaxwell/overnight) \
 **Testes**: Jest, [Supertest](https://github.com/visionmedia/supertest) \
 **Banco de Dados**: MongoDB (com Docker localmente e hospedado no [Atlas](https://www.mongodb.com/cloud/atlas) em produção) \
-**Deploy**: [Heroku](https://www.heroku.com/home) integrado ao repositório
+**Deploy**: [Heroku](https://www.heroku.com/home) integrado ao repositório (ao realizar push na branch develop o deploy é realizado)
+**Injeção de Dependência**: as dependências padrões das classes podem ser alteradas através do construtor, facilitando mocks de serviços ou alterações condicional de comportamento.
 
 ## Executar localmente
 
